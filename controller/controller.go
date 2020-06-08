@@ -3,8 +3,11 @@ package controller
 import (
 	"database/sql"
 	"log"
+	"time"
 
 	"github.com/fummicc1/todo_api_go/model"
+	_ "github.com/go-sql-driver/mysql"
+	"github.com/google/uuid"
 )
 
 var db *sql.DB
@@ -38,6 +41,8 @@ func GetToDoTableName() string {
 
 // AddToDo adds todo in database.
 func AddToDo(todo model.Todo) error {
+	todo.ID = uuid.New().String()
+	todo.Due = time.Now()
 	result, err := db.Exec("INSERT INTO"+GetToDoTableName()+"VALUES(?, ?, ?, ?)", todo.ID, todo.Title, todo.Content, todo.Due)
 	if err != nil {
 		return err

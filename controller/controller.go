@@ -43,7 +43,7 @@ func GetToDoTableName() string {
 func AddToDo(todo model.Todo) error {
 	todo.ID = uuid.New().String()
 	todo.Due = time.Now()
-	_, err := db.Prepare("INSERT INTO" + GetToDoTableName() + " VALUES (?, ?, ?, ?)")
+	_, err := db.Prepare("INSERT INTO " + GetToDoTableName() + " VALUES (?, ?, ?, ?)")
 	if err != nil {
 		return err
 	}

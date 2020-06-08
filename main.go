@@ -11,10 +11,8 @@ func main() {
 
 	todoGroup := router.Group("api/v1/todo")
 	{
-		todoGroup.GET("/", func(c *gin.Context) {
-		})
+		todoGroup.GET("/", getToDo)
 	}
-
 	err := InitializeDatabase()
 	if err != nil {
 		log.Fatal(err)

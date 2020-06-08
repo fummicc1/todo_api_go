@@ -1,7 +1,7 @@
 #!/bin/sh
 
 SQL="
-create database if not exists sample_todo_db;
+use sample_todo_db;
 create table todos (
     id varchar(100) primary key,
     title varchar(100) not null,
@@ -12,4 +12,3 @@ create table todos (
 mysql.server stop
 mysql.server start
 mysql -e "${SQL}"
-go run main.go

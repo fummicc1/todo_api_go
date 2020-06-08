@@ -37,10 +37,12 @@ func createToDo(c *gin.Context) {
 	todo := model.Todo{}
 	err := c.BindJSON(todo)
 	if err != nil {
+		log.Println(err)
 		c.String(http.StatusBadRequest, err.Error())
 	}
 	err = controller.AddToDo(todo)
 	if err != nil {
+		log.Println(err)
 		c.String(http.StatusBadRequest, err.Error())
 	}
 	c.String(http.StatusOK, "Success saving todo")

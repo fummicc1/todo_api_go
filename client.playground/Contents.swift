@@ -45,6 +45,7 @@ func post() {
     request.httpMethod = "POST"
     let todo: ToDo.Request = .init(title: "AAA", content: "BBBB")
     request.httpBody = try? JSONEncoder().encode(todo)
+    print(request.httpBody)
     session.dataTask(with: request) { (data, response, error) in
         if let error = error {
             fatalError(error.localizedDescription)

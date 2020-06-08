@@ -15,8 +15,8 @@ var db *sql.DB
 // InitializeDatabase sets up database.
 func InitializeDatabase() (err error) {
 	// データベースを開く
-	// paramのparseTimをtrueにしてあげると、MySQLのTimeをtime.Time型にパースしてくれる
-	db, err = sql.Open("mysql", "fummicc1:fummicc1@/sample_todo_db?parseTime=true")
+	// paramのparseTimをtrueにしてあげると、MySQLのTime周りをtime.Time型にパースしてくれる
+	db, err = sql.Open("mysql", "fummicc1:fummicc1@/sample_todo_db?parseTime=true&loc=Asia/Tokyo")
 	return
 }
 

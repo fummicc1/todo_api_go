@@ -2,9 +2,10 @@
 
 SQL="
 use sample_todo_db;
+drop table if exists todos;
 create table todos (
-    id varchar(100) primary key,
-    title varchar(100) not null,
+    id varchar(64) primary key,
+    title varchar(20) not null,
     content varchar(200),
     due datetime
 );

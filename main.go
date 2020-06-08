@@ -3,6 +3,7 @@ package main
 import (
 	"log"
 
+	"github.com/fummicc1/todo_api_go/controller"
 	"github.com/gin-gonic/gin"
 )
 
@@ -13,7 +14,7 @@ func main() {
 	{
 		todoGroup.GET("/", getToDo)
 	}
-	err := InitializeDatabase()
+	err := controller.InitializeDatabase()
 	if err != nil {
 		log.Fatal(err)
 	}

@@ -3,6 +3,8 @@ package controller
 import (
 	"database/sql"
 	"log"
+
+	"github.com/fummicc1/todo_api_go/model"
 )
 
 var db *sql.DB
@@ -16,11 +18,11 @@ func InitializeDatabase() (err error) {
 }
 
 // GetToDo : fetch todo from mysql.
-func GetToDo() (result []Todo, err error) {
+func GetToDo() (result []model.Todo, err error) {
 	rows, err := db.Query("SELECT * from " + GetToDoTableName())
 
 	for rows.Next() {
-		todo := &Todo{}
+		todo := &model.Todo{}
 		if err = rows.Scan(&todo.ID, &todo.Title, &todo.Content, &todo.Due); err != nil {
 			log.Fatal(err)
 		}
@@ -35,7 +37,7 @@ func GetToDoTableName() string {
 }
 
 // AddToDo adds todo in database.
-func AddToDo(todo Todo) error {
+func AddToDo(todo model.Todo) error {
 	result, err := db.Exec("INSERT INTO"+GetToDoTableName()+"VALUES(?, ?, ?, ?)", todo.ID, todo.Title, todo.Content, todo.Due)
 	if err != nil {
 		return err

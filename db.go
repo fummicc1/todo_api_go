@@ -7,7 +7,8 @@ import (
 
 var db *sql.DB
 
-func initializeDatabase() (err error) {
+// InitializeDatabase sets up database.
+func InitializeDatabase() (err error) {
 	// データベースを開く
 	// paramのparseTimをtrueにしてあげると、MySQLのTimeをtime.Time型にパースしてくれる
 	db, err = sql.Open("mysql", "fummicc1:fummicc1@/sample_todo_db?parseTime=true")
@@ -31,4 +32,14 @@ func GetToDo() (result []Todo, err error) {
 // GetToDoTableName returns name of todo talbe.
 func GetToDoTableName() string {
 	return "todos"
+}
+
+// AddToDo adds todo in database.
+func AddToDo(todo Todo) error {
+	result, err := db.Exec("INSERT INTO"+GetToDoTableName()+"VALUES(?, ?, ?, ?)", todo.ID, todo.Title, todo.Content, todo.Due)
+	if err != nil {
+		return err
+	}
+	_, err = result.LastInsertId()
+	return err
 }

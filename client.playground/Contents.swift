@@ -7,10 +7,17 @@ enum ToDo {
     }
     
     struct Response: Decodable {
-        let id: String
+        let id: Int
         var title: String
         var content: String?
         var due: Date?
+        
+        enum CodingKeys: String, CodingKey {
+            case id = "ID"
+            case title = "Title"
+            case content = "Content"
+            case due = "Due"
+        }
     }
 }
 
@@ -31,7 +38,7 @@ func get() {
         guard let data = data else {
             fatalError()
         }
-        print(data)
+        print(try? JSONSerialization.jsonObject(with: data, options: []))
         guard let todos = try? JSONDecoder().decode([ToDo.Response].self, from: data) else {
             fatalError()
         }
@@ -59,3 +66,5 @@ func post() {
 }
 
 post()
+
+get()

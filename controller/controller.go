@@ -11,18 +11,20 @@ import (
 )
 
 var db *sql.DB
+var err error
 
 // InitializeDatabase sets up database.
-func InitializeDatabase() (err error) {
+func InitializeDatabase() error {
 	// データベースを開く
 	// paramのparseTimをtrueにしてあげると、MySQLのTime周りをtime.Time型にパースしてくれる
 	db, err = sql.Open("mysql", "fummicc1:fummicc1@/sample_todo_db?parseTime=true&loc=Asia/Tokyo")
-	return
+	return err
 }
 
 // GetToDo : fetch todo from mysql.
 func GetToDo() (result []model.Todo, err error) {
-	rows, err := db.Query("SELECT * from " + GetToDoTableName())
+	var rows *sql.Rows
+	rows, err = db.Query("SELECT * from " + GetToDoTableName())
 
 	for rows.Next() {
 		todo := &model.Todo{}
@@ -43,7 +45,7 @@ func GetToDoTableName() string {
 func AddToDo(todo model.Todo) error {
 	todo.ID = uuid.New().String()
 	todo.Due = time.Now()
-	_, err := db.Prepare("INSERT INTO " + GetToDoTableName() + " VALUES (?, ?, ?, ?)")
+	_, err = db.Prepare("INSERT INTO " + GetToDoTableName() + " VALUES (?, ?, ?, ?)")
 	if err != nil {
 		return err
 	}

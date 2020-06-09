@@ -10,7 +10,7 @@ enum ToDo {
         let id: Int
         var title: String
         var content: String?
-        var due: Date?
+        var due: String?
         
         enum CodingKeys: String, CodingKey {
             case id = "ID"
@@ -38,7 +38,8 @@ func get() {
         guard let data = data else {
             fatalError()
         }
-        print(try? JSONSerialization.jsonObject(with: data, options: []))
+        let decoder = JSONDecoder()
+        decoder.dateDecodingStrategy = .iso8601
         guard let todos = try? JSONDecoder().decode([ToDo.Response].self, from: data) else {
             fatalError()
         }

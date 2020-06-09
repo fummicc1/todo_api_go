@@ -40,7 +40,7 @@ func createToDo(c *gin.Context) {
 		log.Println(err)
 		c.String(http.StatusBadRequest, err.Error())
 	}
-	err = controller.AddToDo(&todo)
+	err = controller.AddToDo(todo)
 	if err != nil {
 		log.Println(err)
 		c.String(http.StatusBadRequest, err.Error())

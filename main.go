@@ -35,12 +35,12 @@ func getToDos(c *gin.Context) {
 
 func createToDo(c *gin.Context) {
 	todo := model.Todo{}
-	err := c.BindJSON(todo)
+	err := c.BindJSON(&todo)
 	if err != nil {
 		log.Println(err)
 		c.String(http.StatusBadRequest, err.Error())
 	}
-	err = controller.AddToDo(todo)
+	err = controller.AddToDo(&todo)
 	if err != nil {
 		log.Println(err)
 		c.String(http.StatusBadRequest, err.Error())

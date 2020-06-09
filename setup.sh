@@ -4,7 +4,7 @@ SQL="
 use sample_todo_db;
 drop table if exists todos;
 create table todos (
-    id varchar(64) primary key,
+    id varchar(64) not null auto_incrememt primary key,
     title varchar(20) not null,
     content varchar(200),
     due datetime

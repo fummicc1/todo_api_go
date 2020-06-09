@@ -7,7 +7,6 @@ import (
 
 	"github.com/fummicc1/todo_api_go/model"
 	_ "github.com/go-sql-driver/mysql"
-	"github.com/google/uuid"
 )
 
 var db *sql.DB
@@ -17,7 +16,7 @@ var err error
 func InitializeDatabase() error {
 	// データベースを開く
 	// paramのparseTimをtrueにしてあげると、MySQLのTime周りをtime.Time型にパースしてくれる
-	db, err = sql.Open("mysql", "fummicc1:fummicc1@/sample_todo_db?parseTime=true&loc=Asia/Tokyo")
+	db, err = sql.Open("mysql", "fummicc1:fummicc1@tcp(127.0.0.1:3306)/sample_todo_db?parseTime=true&loc=Asia%2FTokyo")
 	return err
 }
 
@@ -43,7 +42,6 @@ func GetToDoTableName() string {
 
 // AddToDo adds todo in database.
 func AddToDo(todo model.Todo) error {
-	todo.ID = uuid.New().String()
 	todo.Due = time.Now()
 	_, err = db.Prepare("INSERT INTO " + GetToDoTableName() + " VALUES (?, ?, ?, ?)")
 	if err != nil {
